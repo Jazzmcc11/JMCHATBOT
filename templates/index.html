@@ -1,156 +1,304 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Big Sis Studio</title>
-    <style>
-      :root{
-        --bg:#0b0b0f; --panel:#12121a; --text:#f5f5f7; --muted:#b6b6c3;
-        --accent:#7CFF6B; --border:rgba(255,255,255,.12);
-      }
-      *{box-sizing:border-box}
-      body{
-        margin:0; padding:28px;
-        font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
-        background:
-          radial-gradient(800px 400px at 30% 0%, rgba(124,255,107,.12), transparent 60%),
-          radial-gradient(900px 500px at 80% 30%, rgba(255,255,255,.06), transparent 60%),
-          var(--bg);
-        color:var(--text);
-      }
-      .wrap{max-width:980px;margin:0 auto}
-      h1{margin:0 0 6px;font-size:54px;letter-spacing:-1px}
-      .sub{color:var(--muted);font-size:16px;margin-bottom:22px}
-      .panel{
-        background:linear-gradient(180deg, rgba(255,255,255,.06), transparent 30%), var(--panel);
-        border:1px solid var(--border); border-radius:18px; padding:18px;
-        min-height:260px; box-shadow:0 20px 60px rgba(0,0,0,.35);
-      }
-      .line{margin:8px 0;font-size:18px;line-height:1.35}
-      .label{font-weight:800}
-      .label.big{color:var(--accent)}
-      .typing{color:var(--muted);font-style:italic}
-      .divider{height:1px;background:var(--border);margin:14px 0}
-      .controls{margin-top:18px;display:grid;gap:12px}
-      .row{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center}
-      select,input{
-        width:100%; background:rgba(255,255,255,.04);
-        border:1px solid var(--border); color:var(--text);
-        border-radius:12px; padding:14px; font-size:16px; outline:none;
-      }
-      button{
-        background:rgba(255,255,255,.92); color:#111; border:none;
-        padding:14px 18px; border-radius:12px; font-weight:700; cursor:pointer;
-      }
-      button.secondary{
-        background:rgba(255,255,255,.08); color:var(--text);
-        border:1px solid var(--border);
-      }
-      .hint{color:var(--muted);font-size:13px;margin-top:8px}
-      @media (max-width:700px){
-        h1{font-size:40px}
-        .row{grid-template-columns:1fr}
-      }
-    </style>
-  </head>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Big Sis Studio</title>
 
-  <body>
-    <div class="wrap">
-      <h1>Big Sis Studio</h1>
-      <div class="sub">Fit • Sound • Sports • Moodboards — tomboy-chic lifestyle help, one step at a time. 🥊🎧🏀🎨</div>
+  <style>
+    :root{
+      /* Core palette */
+      --bg: #fbf6ef;              /* warm cream */
+      --panel: #ffffff;
+      --text: #1a1a1a;
+      --muted: #6b6b6b;
+      --border: rgba(0,0,0,.12);
 
-      <div class="panel" id="chatPanel">
-        <div class="line"><span class="label big">Big Sis Studio:</span> Aight sis, we locked in. What we on today?</div>
-        <div class="divider"></div>
-        <div id="chatLines"></div>
-        <div id="typing" class="line typing" style="display:none;">Big Sis Studio is typing…</div>
+      /* Accent colors */
+      --burnt: #c65a1e;           /* burnt orange */
+      --tiffany: #7fdad1;         /* tiffany blue */
+      --charcoal: #111827;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      padding:32px;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color:var(--text);
+      background:
+        radial-gradient(700px 350px at 15% 0%, rgba(198,90,30,.12), transparent 60%),
+        radial-gradient(700px 350px at 85% 10%, rgba(127,218,209,.18), transparent 60%),
+        var(--bg);
+    }
+
+    .wrap{
+      max-width:980px;
+      margin:0 auto;
+    }
+
+    /* Header */
+    h1{
+      margin:0;
+      font-size:56px;
+      letter-spacing:-1px;
+      line-height:1.05;
+    }
+
+    .sub{
+      margin:10px 0 6px;
+      font-size:17px;
+      color:var(--muted);
+    }
+
+    .studioLine{
+      margin-top:14px;
+      padding-top:10px;
+      border-top:2px solid var(--burnt);
+      font-weight:800;
+      letter-spacing:.3px;
+      color:var(--charcoal);
+    }
+
+    /* Chat panel */
+    .panel{
+      margin-top:28px;
+      background:var(--panel);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:20px;
+      min-height:280px;
+      box-shadow:0 20px 50px rgba(0,0,0,.08);
+    }
+
+    .line{
+      margin:12px 0;
+      font-size:18px;
+      line-height:1.45;
+      white-space:pre-wrap;
+    }
+
+    .label{
+      font-weight:900;
+    }
+
+    .label.big{
+      color:var(--charcoal);
+      position:relative;
+    }
+
+    .label.big::before{
+      content:"";
+      display:inline-block;
+      width:10px;
+      height:10px;
+      background:var(--tiffany);
+      border-radius:2px;
+      margin-right:8px;
+      transform:translateY(1px);
+    }
+
+    .typing{
+      font-style:italic;
+      color:var(--muted);
+    }
+
+    /* Controls */
+    .controls{
+      margin-top:26px;
+      display:grid;
+      gap:14px;
+    }
+
+    .labelSmall{
+      font-size:13px;
+      font-weight:900;
+      letter-spacing:.4px;
+      color:var(--charcoal);
+      text-transform:uppercase;
+    }
+
+    select, input{
+      width:100%;
+      padding:14px;
+      font-size:16px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:#fdfdfd;
+      outline:none;
+    }
+
+    select:focus, input:focus{
+      border-color:var(--burnt);
+      box-shadow:0 0 0 4px rgba(198,90,30,.15);
+    }
+
+    .row{
+      display:grid;
+      grid-template-columns:1fr auto auto;
+      gap:10px;
+      align-items:center;
+    }
+
+    button{
+      padding:14px 18px;
+      border-radius:12px;
+      font-weight:900;
+      border:none;
+      cursor:pointer;
+    }
+
+    .primary{
+      background:var(--charcoal);
+      color:#fff;
+    }
+
+    .secondary{
+      background:transparent;
+      border:1px solid var(--border);
+      color:var(--charcoal);
+    }
+
+    .hint{
+      margin-top:6px;
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    .footerNote{
+      margin-top:10px;
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    @media (max-width:700px){
+      h1{font-size:42px}
+      .row{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <h1>Big Sis Studio</h1>
+    <p class="sub">Fit • Sound • Sports • Moodboards</p>
+    <div class="studioLine">Tomboy-chic lifestyle help — from someone who gets it.</div>
+
+    <div class="panel" id="chatPanel">
+      <div class="line">
+        <span class="label big">Big Sis Studio:</span>
+        Aight sis. We locked in. What we on today?
       </div>
 
-      <div class="controls">
-        <div>
-          <div class="line" style="color:var(--muted); margin:0 0 6px;">What we on today?</div>
-          <select id="mode">
-            <option value="fit">Fit Check 🏁</option>
-            <option value="sound">Soundtrack 🎧</option>
-            <option value="sports">Sports 🏀🏈</option>
-            <option value="mood">Moodboards 🎨</option>
-          </select>
-        </div>
+      <div id="chatLines"></div>
 
-        <div>
-          <div class="line" style="color:var(--muted); margin:0 0 6px;">Say it how you say it</div>
-          <div class="row">
-            <input id="msg" placeholder="Type your message…" autocomplete="off" />
-            <button id="sendBtn" type="button">Send</button>
-            <button id="resetBtn" type="button" class="secondary">Reset</button>
-          </div>
-          <div class="hint">Demo tip: pick <b>Fit Check</b> and type “UNC 1s for brunch” • pick <b>Soundtrack</b> and type “soft focus while I code”.</div>
-        </div>
+      <div id="typing" class="line typing" style="display:none;">
+        Big Sis Studio is typing…
       </div>
     </div>
 
-    <script>
-      const chatLines = document.getElementById("chatLines");
-      const typing = document.getElementById("typing");
-      const msg = document.getElementById("msg");
-      const mode = document.getElementById("mode");
-      const sendBtn = document.getElementById("sendBtn");
-      const resetBtn = document.getElementById("resetBtn");
+    <div class="controls">
+      <div>
+        <div class="labelSmall">Focus</div>
+        <select id="mode">
+          <option value="fit">Fit Check</option>
+          <option value="sound">Soundtrack</option>
+          <option value="sports">Sports Talk</option>
+          <option value="mood">Moodboard</option>
+        </select>
+      </div>
 
-      function addLine(label, text, isBigSis=false) {
-        const div = document.createElement("div");
-        div.className = "line";
+      <div>
+        <div class="labelSmall">Say it how you say it</div>
+        <div class="row">
+          <input id="msg" placeholder="UNC 1s for brunch…" />
+          <button class="primary" id="sendBtn">Send</button>
+          <button class="secondary" id="resetBtn">Reset</button>
+        </div>
+        <div class="hint">
+          Ex: “Jordan 1 UNC for brunch” • “Soft focus while I code”
+        </div>
+        <div class="footerNote">
+          Big sis rule: clarity first, aesthetics second — but we still gon’ look good.
+        </div>
+      </div>
+    </div>
+  </div>
 
-        const who = document.createElement("span");
-        who.className = "label" + (isBigSis ? " big" : "");
-        who.textContent = label + " ";
+  <script>
+    const chatLines = document.getElementById("chatLines");
+    const typing = document.getElementById("typing");
+    const msg = document.getElementById("msg");
+    const mode = document.getElementById("mode");
 
-        div.appendChild(who);
-        div.appendChild(document.createTextNode(text));
-        chatLines.appendChild(div);
-        div.scrollIntoView({ behavior: "smooth", block: "end" });
-      }
+    function addLine(label, text, isBigSis=false){
+      const div = document.createElement("div");
+      div.className = "line";
 
-      async function sendMessage() {
-        const text = msg.value.trim();
-        if (!text) return;
+      const span = document.createElement("span");
+      span.className = "label" + (isBigSis ? " big" : "");
+      span.textContent = label + " ";
 
-        addLine("You:", text, false);
-        msg.value = "";
+      div.appendChild(span);
+      div.appendChild(document.createTextNode(text));
+      chatLines.appendChild(div);
+      div.scrollIntoView({behavior:"smooth"});
+    }
 
-        typing.style.display = "block";
-        sendBtn.disabled = true;
+    async function sendMessage(){
+      const text = msg.value.trim();
+      if(!text) return;
 
-        const form = new FormData();
-        form.append("message", text);
-        form.append("mode", mode.value);
+      addLine("You:", text);
+      msg.value = "";
+      typing.style.display = "block";
 
-        try {
-          const res = await fetch("/chat", { method: "POST", body: form });
-          const data = await res.json();
-          addLine("Big Sis Studio:", data.reply || "…", true);
-        } catch (e) {
-          addLine("Big Sis Studio:", "Server acting up. Check your terminal real quick 😅", true);
-        } finally {
-          typing.style.display = "none";
-          sendBtn.disabled = false;
-          msg.focus();
+      const form = new FormData();
+      form.append("message", text);
+      form.append("mode", mode.value);
+
+      try {
+        const res = await fetch("/chat", { method: "POST", body: form });
+
+        if(!res.ok){
+          const t = await res.text();
+          throw new Error(`HTTP ${res.status}: ${t}`);
         }
-      }
 
-      async function resetChat() {
-        try { await fetch("/reset", { method: "POST" }); } catch (e) {}
-        chatLines.innerHTML = "";
-        addLine("Big Sis Studio:", "Bet. Fresh slate. What we doing now?", true);
-        msg.focus();
-      }
+        const data = await res.json();
+        addLine("Big Sis Studio:", data.reply || "Talk to me again, sis.", true);
 
-      sendBtn.addEventListener("click", sendMessage);
-      resetBtn.addEventListener("click", resetChat);
-      msg.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") sendMessage();
-      });
-    </script>
-  </body>
+      } catch (err) {
+        addLine("Big Sis Studio:", `Sis… something broke. (${err.message})`, true);
+
+      } finally {
+        typing.style.display = "none";
+      }
+    }
+
+    document.getElementById("sendBtn").onclick = sendMessage;
+
+    document.getElementById("resetBtn").onclick = async ()=>{
+      typing.style.display = "none";
+      try {
+        const res = await fetch("/reset",{method:"POST"});
+        // if reset isn't set up, this will fail and we'll show it
+        if(!res.ok){
+          const t = await res.text();
+          throw new Error(`HTTP ${res.status}: ${t}`);
+        }
+        chatLines.innerHTML="";
+        addLine("Big Sis Studio:", "Fresh slate. What we doing now?", true);
+      } catch (err) {
+        addLine("Big Sis Studio:", `Reset didn’t work. (${err.message})`, true);
+      }
+    };
+
+    msg.addEventListener("keydown", e => {
+      if(e.key === "Enter") sendMessage();
+    });
+  </script>
+</body>
 </html>
+
